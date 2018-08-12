@@ -1,0 +1,31 @@
+apply plugin: 'kotlin'
+
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
+
+dependencies {
+    implementation deps.kotlin.stdLib.jdk7
+    testImplementation deps.kotlin.test.common
+    testImplementation deps.kotlin.test.jdk
+    testImplementation deps.kotlin.test.annotations
+    testImplementation deps.test.mockitocore
+    testImplementation deps.test.assertj
+}
+
+apply plugin: 'com.novoda.bintray-release'
+
+publish {
+
+    def groupProjectID = 'com.github.lexer.injektor'
+    def artifactProjectID = 'injektor'
+    def publishVersionID = '0.0.3'
+
+    userOrg = 'lexer'
+    repoName = 'injektor'
+    groupId = groupProjectID
+    artifactId = artifactProjectID
+    publishVersion = publishVersionID
+    desc = 'Injektor: "Not" a dependency injection library for Kotlin'
+    website = 'https://github.com/lexer/injektor'
+}
+

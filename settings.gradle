@@ -1,0 +1,5 @@
+include ':app'
+include ':coffee-app'
+include ':injektor'
+include ':injektor-test'
+
