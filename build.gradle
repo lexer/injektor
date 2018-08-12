@@ -1,0 +1,60 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext.versions = [
+            'kotlin': '1.2.50',
+            'kotlinNative': '0.8',
+            'dokka': '0.9.16',
+            'jsr305': '3.0.2',
+            'junit': '4.12',
+            'assertj': '1.7.0',
+    ]
+
+    repositories {
+        google()
+        jcenter()
+        gradlePluginPortal()
+    }
+    ext.deps = [
+            'kotlin': [
+                    'gradlePlugin': "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
+                    'stdLib': [
+                            'common': "org.jetbrains.kotlin:kotlin-stdlib-common:${versions.kotlin}",
+                            'jdk8': "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}",
+                            'jdk7': "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}",
+                            'jdk6': "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}",
+                            'js': "org.jetbrains.kotlin:kotlin-stdlib-js:${versions.kotlin}",
+                    ],
+                    'test': [
+                            'common': "org.jetbrains.kotlin:kotlin-test-common:${versions.kotlin}",
+                            'annotations': "org.jetbrains.kotlin:kotlin-test-annotations-common:${versions.kotlin}",
+                            'jdk': "org.jetbrains.kotlin:kotlin-test-junit:${versions.kotlin}",
+                    ],
+            ],
+            'dokka': "org.jetbrains.dokka:dokka-gradle-plugin:${versions.dokka}",
+            'jsr305': "com.google.code.findbugs:jsr305:${versions.jsr305}",
+            'test': [
+                    'junit': "junit:junit:${versions.junit}",
+                    'assertj': "org.assertj:assertj-core:${versions.assertj}",
+            ]
+    ]
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath deps.kotlin.gradlePlugin
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
