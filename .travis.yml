@@ -1,0 +1,33 @@
+language: android
+android:
+  components:
+  - tools
+  - platform-tools
+  - build-tools-27.0.3
+  - android-27
+  - extra-android-m2repository
+  - extra-android-support
+  - extra-google-m2repository
+  licenses:
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
+jdk:
+- oraclejdk8
+
+script:
+  - ./gradlew injektor:test
+
+branches:
+  except:
+    - gh-pages
+deploy:
+  provider: bintray
+  file: "descriptor.json"
+  user: $BINTRAY_API_USER
+  key: $BINTRAY_API_KEY
+  dry-run: false
+
+cache:
+  directories:
+  - $HOME/.m2
+  - $HOME/.gradle
