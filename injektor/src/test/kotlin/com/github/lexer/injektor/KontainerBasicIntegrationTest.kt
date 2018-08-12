@@ -79,19 +79,19 @@ class KontainerBasicIntegrationTest {
     }
 
     class BindInterfaceToClassModule : Module() {
-        override fun configure() {
+        override fun configure(k: Kontainer) {
             bind<Class1Interface> { Class1() }
         }
     }
 
     class BindClassToClassModule : Module() {
-        override fun configure() {
+        override fun configure(k: Kontainer) {
             bind { Class1() }
         }
     }
 
     class BindSingletonsModule : Module() {
-        override fun configure() {
+        override fun configure(k: Kontainer) {
             bind { Class1() }.asSingleton()
         }
     }
