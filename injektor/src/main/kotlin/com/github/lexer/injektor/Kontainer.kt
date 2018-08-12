@@ -27,7 +27,6 @@ class Kontainer internal constructor() {
     internal fun plus(modules: Array<out Module>) {
         modules.forEach {
             it.initialize(this)
-            it.configure()
         }
     }
 
