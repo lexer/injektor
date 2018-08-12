@@ -1,9 +1,7 @@
 package com.github.lexer.injektor
 
 import kotlin.collections.ArrayList
-import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KClass
-import kotlin.reflect.KProperty
 
 abstract class Module {
     private lateinit var kontainer: Kontainer
@@ -13,10 +11,8 @@ abstract class Module {
         return kontainer.get(klass)
     }
 
-    inline fun <reified T : Any> resolve(): ReadOnlyProperty<Module, T> = object : ReadOnlyProperty<Module, T> {
-        override fun getValue(thisRef: Module, property: KProperty<*>): T {
-            return resolve(T::class)
-        }
+    inline fun <reified T : Any> resolve(): T {
+        return resolve(T::class)
     }
 
     fun <T : Any> bind(klass: KClass<T>, factory: () -> T): BindingBuilder<T> {

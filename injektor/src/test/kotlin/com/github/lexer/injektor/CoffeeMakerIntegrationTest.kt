@@ -42,21 +42,16 @@ class CoffeeMakerIntegrationTest {
     }
 
     class HeaterModule : Module() {
-        val logger: Logger by resolve()
-
         override fun configure() {
-            bind<Heater> { ElectricHeater(logger) }.asSingleton()
+            bind<Heater> { ElectricHeater(logger = resolve()) }.asSingleton()
         }
     }
 
     class CoffeeMakerModule : Module() {
-        val heater: Heater by resolve()
-        val pump: Pump by resolve()
-        val logger: Logger by resolve()
 
         override fun configure() {
-            bind<Pump> { Thermosiphon(heater, logger) }
-            bind { CoffeeMaker(heater, pump, logger) }
+            bind<Pump> { Thermosiphon(heater = resolve(), logger = resolve()) }
+            bind { CoffeeMaker(heater = resolve(), pump = resolve(), logger = resolve()) }
         }
     }
 

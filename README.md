@@ -61,20 +61,14 @@ Each dependency should be explicitly declared by implementing `Module` class.
 
 ```kotlin
 class CoffeeMakerModule : Module() {
-    // Dependencies required to create Pump and CoffeeMaker
-    // By using resolve you are referencing factory method 
-    // that will be used to resolve a requested dependency.
-    val heater: Heater by resolve()
-    val pump: Pump by resolve()
-    val logger: Logger by resolve()
-
+    // Think of "resolve()" as a promise that dependency
+    // will be satisfied when module will be integrated
     override fun configure() {
-        // binds Pump interface to Thermosiphon implementation
-        bind<Pump> { Thermosiphon(heater, logger) }
-        // binds CoffeeMaker to CoffeeMaker implementation
-        bind { CoffeeMaker(heater, pump, logger) }
+        bind<Pump> { Thermosiphon(heater = resolve(), logger = resolve()) }
+        bind { CoffeeMaker(heater = resolve(), pump = resolve(), logger = resolve()) }
     }
 }
+
 ```
 
 By default declared dependency will be resolved as a new instance. 
@@ -83,10 +77,8 @@ to the end of your declaration.
 
 ```kotlin
 class HeaterModule : Module() {
-    val logger: Logger by resolve()
-
     override fun configure() {
-        bind<Heater> { ElectricHeater(logger) }.asSingleton()
+        bind<Heater> { ElectricHeater(logger = resolve()) }.asSingleton()
     }
 }
 ```
