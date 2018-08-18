@@ -8,6 +8,7 @@ class Logger {
     }
 
     fun log(message: String) {
+        System.out.println(message)
         logs.add(message)
     }
 

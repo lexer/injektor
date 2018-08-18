@@ -1,6 +1,15 @@
 package com.github.lexer.injektor.coffee
 
-class CoffeeMaker(val heater: Heater, val pump: Pump, val logger: Logger) {
+import com.github.lexer.injektor.Injected
+import com.github.lexer.injektor.Kontainer
+import com.github.lexer.injektor.inject
+
+class CoffeeMaker(kontainer: Kontainer) : Injected(kontainer) {
+
+    val heater: Heater by inject()
+    val pump: Pump by inject()
+    val logger: Logger by inject()
+
     init {
         logger.log("coffee maker created")
     }

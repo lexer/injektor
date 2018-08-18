@@ -1,9 +1,10 @@
 package com.github.lexer.injektor.coffee
 
+import com.github.lexer.injektor.Kontainer
 import com.github.lexer.injektor.Module
 
 class HeaterModule : Module() {
-    override fun configure() {
-        bind<Heater> { ElectricHeater(logger = resolve()) }.asSingleton()
+    override fun configure(kontainer: Kontainer) {
+        bind<Heater> { ElectricHeater(kontainer) }.asSingleton()
     }
 }

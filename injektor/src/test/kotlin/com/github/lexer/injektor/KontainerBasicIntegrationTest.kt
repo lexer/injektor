@@ -7,11 +7,11 @@ import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 
 class KontainerBasicIntegrationTest {
-    private lateinit var kontainer: Kontainer
+    private lateinit var kontainer: KontainerImpl
 
     @Before
     fun setUp() {
-        kontainer = Kontainer()
+        kontainer = KontainerImpl()
     }
 
     @Test
@@ -38,7 +38,7 @@ class KontainerBasicIntegrationTest {
 
     @Test
     fun extend() {
-        val parentKotainer = Kontainer()
+        val parentKotainer = KontainerImpl()
         parentKotainer.bind(Class1::class, SimpleProvider { Class1() })
         kontainer.extend(parentKotainer)
         val stubClass = kontainer.get(Class1::class)
@@ -79,19 +79,19 @@ class KontainerBasicIntegrationTest {
     }
 
     class BindInterfaceToClassModule : Module() {
-        override fun configure() {
+        override fun configure(kontainer: Kontainer) {
             bind<Class1Interface> { Class1() }
         }
     }
 
     class BindClassToClassModule : Module() {
-        override fun configure() {
+        override fun configure(kontainer: Kontainer) {
             bind { Class1() }
         }
     }
 
     class BindSingletonsModule : Module() {
-        override fun configure() {
+        override fun configure(kontainer: Kontainer) {
             bind { Class1() }.asSingleton()
         }
     }

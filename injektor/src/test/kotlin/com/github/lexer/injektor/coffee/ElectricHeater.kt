@@ -1,6 +1,12 @@
 package com.github.lexer.injektor.coffee
 
-class ElectricHeater(val logger: Logger) : Heater {
+import com.github.lexer.injektor.Injected
+import com.github.lexer.injektor.Kontainer
+import com.github.lexer.injektor.inject
+
+class ElectricHeater(kontainer: Kontainer) : Injected(kontainer), Heater {
+    val logger: Logger by inject()
+
     init {
         logger.log("heater created")
     }
