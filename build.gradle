@@ -8,6 +8,7 @@ buildscript {
             'jsr305': '3.0.2',
             'junit': '4.12',
             'assertj': '1.7.0',
+            'mockito': '2.21.0'
     ]
 
     repositories {
@@ -34,6 +35,7 @@ buildscript {
             'dokka': "org.jetbrains.dokka:dokka-gradle-plugin:${versions.dokka}",
             'jsr305': "com.google.code.findbugs:jsr305:${versions.jsr305}",
             'test': [
+                    'mockitocore' : "org.mockito:mockito-core:${versions.mockito}",
                     'junit': "junit:junit:${versions.junit}",
                     'assertj': "org.assertj:assertj-core:${versions.assertj}",
             ]

@@ -8,4 +8,5 @@ dependencies {
     testImplementation deps.kotlin.test.common
     testImplementation deps.kotlin.test.jdk
     testImplementation deps.kotlin.test.annotations
+    testImplementation deps.test.mockitocore
 }

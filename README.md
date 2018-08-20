@@ -10,7 +10,12 @@ For complete sample code that you can compile and run, see
 Let's start from defining coffee maker classes:
 
 ```kotlin
-class CoffeeMaker(val heater: Heater, val pump: Pump, val logger: Logger) {
+class CoffeeMaker(kontainer: Kontainer) : Kontainerized(kontainer) {
+
+    private val heater: Heater by inject()
+    private val pump: Pump by inject()
+    private val logger: Logger by inject()
+
     fun brew() {
         heater.on()
         pump.pump()
@@ -25,10 +30,11 @@ interface Heater {
     fun isHot(): Boolean
 }
 
-class ElectricHeater(val logger: Logger) : Heater {
+class ElectricHeater(kontainer: Kontainer) : Kontainerized(kontainer), Heater {
+    private val logger: Logger by inject()
+
     var isOn = false
-    
-    override fun on() {      
+    override fun on() {
         logger.log("heater is on")
         isOn = true
     }
@@ -47,7 +53,10 @@ interface Pump {
     fun pump()
 }
 
-class Thermosiphon(val heater: Heater, val logger: Logger) : Pump {
+class Thermosiphon(kontainer: Kontainer) : Kontainerized(kontainer), Pump {
+    private val heater: Heater by inject()
+    private val logger: Logger by inject()
+
     override fun pump() {
         if (heater.isHot()) {
             logger.log("pump is pumping")
@@ -61,11 +70,11 @@ Each dependency should be explicitly declared by implementing `Module` class.
 
 ```kotlin
 class CoffeeMakerModule : Module() {
-    // Think of "resolve()" as a promise that dependency
-    // will be satisfied when module will be integrated
-    override fun configure() {
-        bind<Pump> { Thermosiphon(heater = resolve(), logger = resolve()) }
-        bind { CoffeeMaker(heater = resolve(), pump = resolve(), logger = resolve()) }
+    // Since Injektor framework rely on property injection
+    // all you need to pass your factory methods is kontainer object
+    override fun configure(kontainer: Kontainer) {
+        bind<Pump> { Thermosiphon(kontainer) }
+        bind { CoffeeMaker(kontainer) }
     }
 }
 
@@ -77,8 +86,8 @@ to the end of your declaration.
 
 ```kotlin
 class HeaterModule : Module() {
-    override fun configure() {
-        bind<Heater> { ElectricHeater(logger = resolve()) }.asSingleton()
+    override fun configure(kontainer: Kontainer) {
+        bind<Heater> { ElectricHeater(kontainer) }.asSingleton()
     }
 }
 ```
@@ -108,7 +117,11 @@ Finally we can resolve our `CoffeMaker` dependency and brew some coffee.
 There are two ways to resolve dependencies using `Kontainer`.
 
 First is using `inject()` delegated property. To enable that property in your class it 
-should implement `Injectable` interface.
+should implement `Injectable` interface or be inherited from `Kontainerized` super class.
+
+Typically you should use `Injectable` interface for classes that should be inherited from
+some other class like `Activity`. For your own classes you should prefer to use `Kontainerized` 
+super class.
 
 ```kotlin
 class CoffeeApp : Injectable {
@@ -143,6 +156,57 @@ val coffeeMaker2 : CoffeeMaker = coffeeContainer.get()
 That's it folks! Happy ~~brewing~~injecting! 
 
 🚀 🐑 🚢
+
+### FAQ
+
+1. Why property injection?
+
+Typically it's always recommended to rely on constructor injection. 
+However constructor injection requires unnecessary initialization of all 
+dependencies during construction time. With property injection we can enforce lazy initialization 
+of every individual dependency. 
+
+*** You can avoid it with by passing construct arguments as `Lazy<>` but
+that creates a lot of boilerplate code
+
+2. Is it possible to write unit tests for classes with `injected` properties?
+
+Yes. It is possible.
+
+```kotlin
+class UnitTestingExample {
+    @Mock
+    lateinit var dependency : Dependency
+
+    @Before
+    fun setUp() {
+        MockitoAnnotations.initMocks(this)
+    }
+
+    @Test
+    fun mooTest() {
+        val mockContainer = MockContainer()
+                .mock(dependency)
+        val testedClass = CowClass(mockContainer)
+
+        testedClass.sayMoo()
+
+        Mockito.verify(dependency).moo()
+    }
+
+    class CowClass(kontainer: Kontainer) : Kontainerized(kontainer) {
+        private val dependency : Dependency by inject()
+
+        fun sayMoo() : String {
+            return dependency.moo()
+        }
+    }
+
+    interface Dependency {
+        fun moo() : String
+    }
+}
+```
 
 ### TODO
 
