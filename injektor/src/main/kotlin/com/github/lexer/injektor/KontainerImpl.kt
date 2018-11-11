@@ -4,6 +4,7 @@ import kotlin.reflect.KClass
 
 internal open class KontainerImpl : Kontainer {
     private val bindings: HashMap<KClass<*>, Provider<*>> = HashMap()
+    private val addedModules: HashSet<KClass<out Module>> = HashSet()
 
     override fun <T : Any> get(clazz: KClass<T>): T {
         val result = bindings[clazz] as Provider<T>
@@ -20,11 +21,16 @@ internal open class KontainerImpl : Kontainer {
 
     internal fun extend(parent: Kontainer) {
         bindings.putAll(parent.bindings())
+        addedModules.addAll((parent as KontainerImpl).addedModules);
     }
 
-    internal fun plus(modules: Array<out Module>) {
+    internal fun plus(modules: List<Module>) {
         modules.forEach {
-            it.initialize(this)
+            if (!addedModules.contains(it::class)) {
+                plus(it.dependencies())
+                it.initialize(this)
+                addedModules.add(it::class)
+            }
         }
     }
 }

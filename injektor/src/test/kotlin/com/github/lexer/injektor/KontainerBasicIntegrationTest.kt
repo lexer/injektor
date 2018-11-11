@@ -47,7 +47,7 @@ class KontainerBasicIntegrationTest {
 
     @Test
     fun plus_resolveInterfaceFromPlussedModule() {
-        kontainer.plus(arrayOf(BindInterfaceToClassModule()))
+        kontainer.plus(listOf(BindInterfaceToClassModule()))
         val stubClass1 = kontainer.get(Class1Interface::class)
         val stubClass2 = kontainer.get(Class1Interface::class)
 
@@ -58,7 +58,7 @@ class KontainerBasicIntegrationTest {
 
     @Test
     fun plus_resolveClassFromPlussedModule() {
-        kontainer.plus(arrayOf(BindClassToClassModule()))
+        kontainer.plus(listOf(BindClassToClassModule()))
         val stubClass1 = kontainer.get(Class1::class)
         val stubClass2 = kontainer.get(Class1::class)
 
@@ -69,7 +69,7 @@ class KontainerBasicIntegrationTest {
 
     @Test
     fun plus_resolveClassFromSingletondModule() {
-        kontainer.plus(arrayOf(BindSingletonsModule()))
+        kontainer.plus(listOf(BindSingletonsModule()))
         val stubClass1 = kontainer.get(Class1::class)
         val stubClass2 = kontainer.get(Class1::class)
 
