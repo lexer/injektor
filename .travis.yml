@@ -20,12 +20,6 @@ script:
 branches:
   except:
     - gh-pages
-deploy:
-  provider: bintray
-  file: "descriptor.json"
-  user: $BINTRAY_API_USER
-  key: $BINTRAY_API_KEY
-  dry-run: false
 
 cache:
   directories:
