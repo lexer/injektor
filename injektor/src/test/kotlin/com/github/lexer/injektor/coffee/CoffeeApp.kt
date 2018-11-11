@@ -7,11 +7,7 @@ import com.github.lexer.injektor.inject
 class CoffeeApp : Injectable {
     val logger: Logger by inject()
     val cofferMaker: CoffeeMaker by inject()
-    val coffeeContainer: Kontainer
-
-    init {
-        coffeeContainer = Kontainer.create(modules = listOf(CoffeeMakerModule()))
-    }
+    val kontainer = Kontainer.create(modules = listOf(CoffeeMakerModule()))
 
     fun run(): Logger {
         cofferMaker.brew()
@@ -20,6 +16,6 @@ class CoffeeApp : Injectable {
     }
 
     override fun kontainer(): Kontainer {
-        return coffeeContainer;
+        return kontainer;
     }
 }
