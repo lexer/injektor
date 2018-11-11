@@ -1,4 +1,4 @@
-## Injektor: Minimalist Kotlin dependency injection library
+## Injektor: Minimalist Kotlin dependency injection library [![Build Status](https://travis-ci.org/lexer/injektor.svg?branch=master)](https://travis-ci.org/lexer/injektor)
 
 ```
 compile 'com.github.lexer.injektor:injektor:0.0.1'
