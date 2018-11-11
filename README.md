@@ -234,6 +234,14 @@ class UnitTestingExample {
 }
 ```
 
+### Deploy new version
+
+Update version and run deploy script below.
+
+```
+$ ./gradlew clean build bintrayUpload -PbintrayUser=BINTRAY_USERNAME -PbintrayKey=BINTRAY_KEY -PdryRun=false
+```
+
 ### TODO
 
 - More robust error messaging needed
