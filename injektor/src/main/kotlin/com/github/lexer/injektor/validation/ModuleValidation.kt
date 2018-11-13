@@ -11,10 +11,10 @@ fun validateModule(module: Module): List<ModuleValidationError> {
 }
 
 private fun recursivelyInitializeDependencies(module: Module, kontainer: ValidatorKontainer) {
-    module.dependencies().forEach {
-        it.initialize(kontainer)
-        recursivelyInitializeDependencies(it, kontainer)
-    }
+//    module.dependencies().forEach {
+//        it.initialize(kontainer)
+//        recursivelyInitializeDependencies(it, kontainer)
+//    }
 
     module.initialize(kontainer)
 }

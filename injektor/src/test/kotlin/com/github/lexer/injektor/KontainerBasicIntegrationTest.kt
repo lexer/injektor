@@ -37,15 +37,6 @@ class KontainerBasicIntegrationTest {
     }
 
     @Test
-    fun extend() {
-        val parentKotainer = KontainerImpl()
-        parentKotainer.bind(Class1::class, SimpleProvider { Class1() })
-        kontainer.extend(parentKotainer)
-        val stubClass = kontainer.get(Class1::class)
-        assertNotNull(stubClass)
-    }
-
-    @Test
     fun plus_resolveInterfaceFromPlussedModule() {
         kontainer.plus(listOf(BindInterfaceToClassModule()))
         val stubClass1 = kontainer.get(Class1Interface::class)
@@ -79,31 +70,18 @@ class KontainerBasicIntegrationTest {
     }
 
     class BindInterfaceToClassModule : Module() {
-        override fun dependencies(): List<Module> {
-            return emptyList()
-        }
-
-
         override fun configure(kontainer: Kontainer) {
             bind<Class1Interface> { Class1() }
         }
     }
 
     class BindClassToClassModule : Module() {
-        override fun dependencies(): List<Module> {
-            return emptyList()
-        }
-
         override fun configure(kontainer: Kontainer) {
             bind { Class1() }
         }
     }
 
     class BindSingletonsModule : Module() {
-        override fun dependencies(): List<Module> {
-            return emptyList()
-        }
-
         override fun configure(kontainer: Kontainer) {
             bind { Class1() }.asSingleton()
         }

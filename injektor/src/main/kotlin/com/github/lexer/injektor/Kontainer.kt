@@ -11,11 +11,8 @@ interface Kontainer {
     fun <T : Any> bind(clazz: KClass<T>, provider: Provider<T>)
 
     companion object Builder {
-        fun create(parent: Kontainer? = null, modules: List<Module>): Kontainer {
+        fun create(modules: List<Module>): Kontainer {
             val kontainer = KontainerImpl()
-            if (parent != null) {
-                kontainer.extend(parent)
-            }
             kontainer.plus(modules)
             return kontainer
         }

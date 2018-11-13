@@ -18,8 +18,6 @@ abstract class Module {
 
     abstract fun configure(kontainer: Kontainer)
 
-    abstract fun dependencies(): List<Module>
-
     internal fun initialize(kontainer: Kontainer) {
         this.kontainer = kontainer
         configure(kontainer)
