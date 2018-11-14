@@ -8,7 +8,7 @@ import com.github.lexer.injektor.coffee.LoggerModule
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
-class ModuleValidationTest {
+class ValidationTest {
     @Test
     fun checkKontainer_validKontainerWithCompleteGraph_noErrors() {
         val kontainer = Kontainer.create(modules = listOf(LoggerModule(), HeaterModule(), CoffeeMakerModule()))
