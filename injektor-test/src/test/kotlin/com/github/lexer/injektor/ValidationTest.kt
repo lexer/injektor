@@ -1,10 +1,6 @@
-package com.github.lexer.injektor.validation
+package com.github.lexer.injektor
 
-import com.github.lexer.injektor.Kontainer
-import com.github.lexer.injektor.coffee.CoffeeMakerModule
-import com.github.lexer.injektor.coffee.Heater
-import com.github.lexer.injektor.coffee.HeaterModule
-import com.github.lexer.injektor.coffee.LoggerModule
+import com.github.lexer.injektor.coffee.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
@@ -16,10 +12,11 @@ class ValidationTest {
     }
 
     @Test
-    fun checkKontainer_kontainerMissingHeaterModule_noErrors() {
+    fun checkKontainer_kontainerMissingHeaterModule_classesWontBeResolved() {
         val kontainer = Kontainer.create(modules = listOf(LoggerModule(), CoffeeMakerModule()))
         val errors = checkKontainer(kontainer)
-        assertThat(errors[0].unresolvedClass).isEqualTo(Heater::class)
+        assertThat(errors[0].unresolvedClass).isEqualTo(CoffeeMaker::class)
+        assertThat(errors[1].unresolvedClass).isEqualTo(Pump::class)
     }
 
 }

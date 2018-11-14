@@ -28,8 +28,12 @@ internal open class KontainerImpl(private val logger: InjektorLogger) : Kontaine
     }
 
     override fun <T : Any> get(clazz: KClass<T>): T {
-        val provider = bindings[clazz] as Provider<T>
-        return provider.provide()
+        val provider = bindings[clazz]
+        if (provider != null) {
+            return (provider as Provider<T>).provide()
+        } else {
+            throw IllegalArgumentException("Cannot resolve ${clazz.java.name}")
+        }
     }
 
     override fun bindings(): Map<KClass<*>, Provider<*>> {

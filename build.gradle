@@ -22,6 +22,7 @@ buildscript {
     ext.deps = [
             'kotlin': [
                     'gradlePlugin': "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
+                    'reflect': "org.jetbrains.kotlin:kotlin-reflect:${versions.kotlin}",
                     'stdLib': [
                             'common': "org.jetbrains.kotlin:kotlin-stdlib-common:${versions.kotlin}",
                             'jdk8': "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}",

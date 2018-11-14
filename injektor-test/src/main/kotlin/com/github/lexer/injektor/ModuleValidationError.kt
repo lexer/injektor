@@ -1,4 +1,4 @@
-package com.github.lexer.injektor.validation
+package com.github.lexer.injektor
 
 import kotlin.reflect.KClass
 
