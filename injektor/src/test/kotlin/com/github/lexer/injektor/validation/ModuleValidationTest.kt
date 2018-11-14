@@ -1,5 +1,6 @@
 package com.github.lexer.injektor.validation
 
+import com.github.lexer.injektor.Kontainer
 import com.github.lexer.injektor.coffee.CoffeeMakerModule
 import com.github.lexer.injektor.coffee.Heater
 import com.github.lexer.injektor.coffee.HeaterModule
@@ -9,23 +10,16 @@ import org.junit.Test
 
 class ModuleValidationTest {
     @Test
-    fun validateModule_validModuleWithoutDepedencies_noErrors() {
-        assertThat(validateModule(LoggerModule())).isEmpty()
+    fun checkKontainer_validKontainerWithCompleteGraph_noErrors() {
+        val kontainer = Kontainer.create(modules = listOf(LoggerModule(), HeaterModule(), CoffeeMakerModule()))
+        assertThat(checkKontainer(kontainer)).isEmpty()
     }
 
     @Test
-    fun validateModule_validModuleWithSingleDepedency_noErrors() {
-        assertThat(validateModule(HeaterModule())).isEmpty()
-    }
-
-    @Test
-    fun validateModule_validModuleWithRecursiveDepedencies_noErrors() {
-        assertThat(validateModule(CoffeeMakerModule())).isEmpty()
-    }
-
-    @Test
-    fun validateModule_invalidModuleWithUndeclaredDependency_singleUnresolvedDependency() {
-        val errors = validateModule(HeaterModuleWithoutCorrectDepedency())
+    fun checkKontainer_kontainerMissingHeaterModule_noErrors() {
+        val kontainer = Kontainer.create(modules = listOf(LoggerModule(), CoffeeMakerModule()))
+        val errors = checkKontainer(kontainer)
         assertThat(errors[0].unresolvedClass).isEqualTo(Heater::class)
     }
+
 }

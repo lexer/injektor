@@ -3,15 +3,16 @@ package com.github.lexer.injektor
 import kotlin.reflect.KClass
 
 class BindingBuilder<T : Any>(val clazz: KClass<T>, val factory: () -> T) {
-    private var singleton = false
+    private var scopeName : String? = null;
 
-    fun asSingleton() {
-        singleton = true
+    fun scope(scopeName: String) {
+        this.scopeName = scopeName
     }
 
     private fun provider(): Provider<T> {
-        if (singleton) {
-            return MemoizedProvider(factory)
+        val cacheScopeName = scopeName;
+        if (cacheScopeName != null) {
+            return ScopedProvider(cacheScopeName, clazz, factory);
         } else {
             return SimpleProvider(factory)
         }

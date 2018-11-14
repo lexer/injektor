@@ -11,12 +11,15 @@ interface Kontainer {
     fun <T : Any> bind(clazz: KClass<T>, provider: Provider<T>)
 
     companion object Builder {
-        fun create(modules: List<Module>): Kontainer {
-            val kontainer = KontainerImpl()
+        fun create(modules: List<Module>, logger: InjektorLogger = NoOpLogger()): Kontainer {
+            val kontainer = KontainerImpl(logger)
             kontainer.plus(modules)
             return kontainer
         }
     }
+
+    fun startScope(scopeName: String)
+    fun stopScope(scopeName: String)
 }
 
 inline fun <reified T : Any> Kontainer.get(): T {

@@ -7,6 +7,6 @@ import com.github.lexer.injektor.coffee.Heater
 
 class HeaterModuleWithoutCorrectDepedency : Module() {
     override fun configure(kontainer: Kontainer) {
-        bind<Heater> { ElectricHeater(kontainer) }.asSingleton()
+        bind<Heater> { ElectricHeater(kontainer) }.scope("coffee")
     }
 }

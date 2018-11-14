@@ -1,17 +1,15 @@
 package com.github.lexer.injektor.validation
 
-import com.github.lexer.injektor.KontainerImpl
+import com.github.lexer.injektor.Kontainer
 
-internal class ValidatorKontainer : KontainerImpl() {
-    fun resolveAll(): List<ModuleValidationError> {
-        val result = ArrayList<ModuleValidationError>()
-        bindings().forEach {
-            try {
-                it.value.provide();
-            } catch (e : Exception) {
-                result.add(ModuleValidationError(it.key, e))
-            }
+fun checkKontainer(kontainer: Kontainer): List<ModuleValidationError> {
+    val result = ArrayList<ModuleValidationError>()
+    kontainer.bindings().forEach {
+        try {
+            kontainer.get(it.key);
+        } catch (e: Exception) {
+            result.add(ModuleValidationError(it.key, e))
         }
-        return result
     }
+    return result
 }

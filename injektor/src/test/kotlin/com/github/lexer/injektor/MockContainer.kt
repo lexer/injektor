@@ -3,6 +3,14 @@ package com.github.lexer.injektor
 import kotlin.reflect.KClass
 
 class MockContainer : Kontainer {
+    override fun startScope(scopeName: String) {
+
+    }
+
+    override fun stopScope(scopeName: String) {
+
+    }
+
     private val fakes: HashMap<KClass<*>, Any> = HashMap()
 
     override fun bindings(): Map<KClass<*>, Provider<*>> {
