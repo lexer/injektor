@@ -6,7 +6,7 @@ interface Injector {
 
     fun <T : Any> get(clazz: KClass<T>): T
 
-    fun bindings(): Map<KClass<*>, Provider<*>>
+    fun providers(): Map<KClass<*>, Provider<*>>
 
     fun <T : Any> bind(clazz: KClass<T>, provider: Provider<T>)
 

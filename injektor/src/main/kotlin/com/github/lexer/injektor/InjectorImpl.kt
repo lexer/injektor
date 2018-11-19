@@ -36,7 +36,7 @@ internal open class InjectorImpl(private val logger: InjectorLogger) : Injector 
         }
     }
 
-    override fun bindings(): Map<KClass<*>, Provider<*>> {
+    override fun providers(): Map<KClass<*>, Provider<*>> {
         return providers
     }
 

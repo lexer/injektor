@@ -4,15 +4,15 @@ import kotlin.reflect.KClass
 
 abstract class Module {
     private lateinit var injector: Injector
-    private val bindings = ArrayList<BindingBuilder<*>>()
+    private val bindings = ArrayList<Binding<*>>()
 
-    fun <T : Any> bind(klass: KClass<T>, factory: () -> T): BindingBuilder<T> {
-        val binding = BindingBuilder(klass, factory)
+    fun <T : Any> bind(klass: KClass<T>, factory: () -> T): Binding<T> {
+        val binding = Binding(klass, factory)
         bindings.add(binding)
         return binding
     }
 
-    inline fun <reified T : Any> bind(noinline factory: () -> T): BindingBuilder<T> {
+    inline fun <reified T : Any> bind(noinline factory: () -> T): Binding<T> {
         return bind(T::class, factory)
     }
 

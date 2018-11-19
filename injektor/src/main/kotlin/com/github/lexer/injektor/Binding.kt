@@ -2,7 +2,7 @@ package com.github.lexer.injektor
 
 import kotlin.reflect.KClass
 
-class BindingBuilder<T : Any>(val clazz: KClass<T>, val factory: () -> T) {
+class Binding<T : Any>(val clazz: KClass<T>, val factory: () -> T) {
     private var scopeName: String? = null
 
     fun scope(scopeName: String) {

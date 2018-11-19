@@ -13,7 +13,7 @@ class MockInjector : Injector {
 
     private val fakes: HashMap<KClass<*>, Any> = HashMap()
 
-    override fun bindings(): Map<KClass<*>, Provider<*>> {
+    override fun providers(): Map<KClass<*>, Provider<*>> {
         return HashMap()
     }
 
