@@ -6,10 +6,6 @@ interface Injector {
 
     fun <T : Any> get(clazz: KClass<T>): T
 
-    fun providers(): Map<KClass<*>, Provider<*>>
-
-    fun <T : Any> bind(clazz: KClass<T>, provider: Provider<T>)
-
     companion object Builder {
         fun create(modules: List<Module>, logger: InjectorLogger = NoOpLogger()): Injector {
             val kontainer = InjectorImpl(logger)

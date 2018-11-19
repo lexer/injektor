@@ -18,7 +18,7 @@ class Binding<T : Any>(val clazz: KClass<T>, val factory: () -> T) {
         }
     }
 
-    internal fun bind(injector: Injector) {
+    internal fun bind(injector: InjectorImpl) {
         injector.bind(clazz, provider())
     }
 }

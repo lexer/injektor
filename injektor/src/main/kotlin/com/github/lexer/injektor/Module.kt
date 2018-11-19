@@ -18,7 +18,7 @@ abstract class Module {
 
     abstract fun configure(injector: Injector)
 
-    internal fun initialize(injector: Injector) {
+    internal fun initialize(injector: InjectorImpl) {
         this.injector = injector
         configure(injector)
         for (binding in bindings) {

@@ -12,7 +12,7 @@ fun <T> inject(initializer: () -> T): Inject<T> = SynchronizedInjectImpl(initial
 
 internal object UNINITIALIZED_VALUE
 
-var EAGER_INITIALIZATION = false
+var EAGER_INJECTION = false
 
 private class SynchronizedInjectImpl<out T>(initializer: () -> T) : Inject<T> {
     private var initializer: (() -> T)? = initializer
@@ -22,7 +22,7 @@ private class SynchronizedInjectImpl<out T>(initializer: () -> T) : Inject<T> {
     private val lock = this
 
     init {
-        if (EAGER_INITIALIZATION) {
+        if (EAGER_INJECTION) {
             _value = initializer()
             this.initializer = null
         }

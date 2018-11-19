@@ -2,7 +2,7 @@ package com.github.lexer.injektor
 
 import kotlin.reflect.KClass
 
-internal open class InjectorImpl(private val logger: InjectorLogger) : Injector {
+internal open class InjectorImpl(private val logger: InjectorLogger) : Injector, ProviderRegistry {
     private val providers: HashMap<KClass<*>, Provider<*>> = HashMap()
     private val scopes: HashMap<String, Scope> = HashMap()
 
@@ -40,7 +40,7 @@ internal open class InjectorImpl(private val logger: InjectorLogger) : Injector 
         return providers
     }
 
-    override fun <T : Any> bind(clazz: KClass<T>, provider: Provider<T>) {
+    internal fun <T : Any> bind(clazz: KClass<T>, provider: Provider<T>) {
         if (provider is ScopedProvider) {
             val scope = getScope(provider.scopeName)
             provider.setScope(scope)
