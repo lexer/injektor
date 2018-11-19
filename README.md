@@ -247,36 +247,27 @@ Injector logs these attempts as warnings. Please see `InjectorLogger` for detail
 ### Unit testing
 
 ```kotlin
-class UnitTestingExample {
-    @Mock
-    lateinit var dependency: Dependency
+class CoffeeMakerTest {
+    @Mock lateinit var pump: Pump
+    @Mock lateinit var heater: Heater
+    private lateinit var coffeeMaker: CoffeeMaker
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
+        coffeeMaker = CoffeeMaker(MockInjector()
+                .mock(pump)
+                .mock(heater)
+                .mock(Logger()))
     }
 
     @Test
-    fun mooTest() {
-        val mockContainer = MockInjector()
-                .mock(dependency)
-        val testedClass = CowClass(mockContainer)
+    fun brew() {
+        coffeeMaker.brew()
 
-        testedClass.sayMoo()
-
-        Mockito.verify(dependency).moo()
-    }
-
-    class CowClass(override val injector: Injector) : Injectable {
-        private val dependency: Dependency by inject()
-
-        fun sayMoo(): String {
-            return dependency.moo()
-        }
-    }
-
-    interface Dependency {
-        fun moo(): String
+        verify(heater).on()
+        verify(pump).pump()
+        verify(heater).off()
     }
 }
 ```
