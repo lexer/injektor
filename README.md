@@ -2,7 +2,7 @@
 
 *Dependency injection is hard, scary and opinionated. So this is "not" a dependency injection library :)*
 
-*Project is under active development. API is not stabilized*
+*This project is under active development. The API is not stabilized*
 
 ```
 compile 'com.github.lexer.injektor:injektor:0.0.3'
@@ -17,8 +17,8 @@ compile 'com.github.lexer.injektor:injektor-test:0.0.3'
 
 ### Get started
 
-To demonstrate usage of this library lets do a `classic` coffee maker.
-For complete sample code that you can compile and run, see 
+To demonstrate the usage of this library let's do a `classic` coffee maker.
+For the complete sample code that you can compile and run, see 
 [CoffeeMakerIntegrationTest](/coffee-app/src/test/kotlin/com/github/lexer/injektor/coffee/CoffeeMakerIntegrationTest.kt).
 
 Let's start from defining coffee maker classes:
@@ -80,7 +80,7 @@ class Thermosiphon(override val injector: Injector) : Injectable, Pump {
 ```
 
 Injektor can't resolve undeclared dependencies.
-Each dependency should be explicitly declared by implementing `Module` class.
+Each dependency should be explicitly declared by implementing the `Module` class.
 
 ```kotlin
 class CoffeeMakerModule : Module() {
@@ -94,9 +94,9 @@ class CoffeeMakerModule : Module() {
 
 ```
 
-By default declared dependency will be resolved as a new instance. 
+By default, the declared dependency will be resolved as a new instance. 
 If you want the reuse instance of a specific class you should use scopes.
-Deeper dive into scopes is provide in separate section.
+A deeper dive into scopes is provided in a separate section below.
 
 ```kotlin
 class HeaterModule : Module() {
@@ -107,14 +107,14 @@ class HeaterModule : Module() {
 ```
 
 You should think of `Modules` as "fancy factories". 
-Actual dependency resolution is done by `Injector`s.
+The actual dependency resolution is done by `Injector`s.
 
 `Injector` is responsible for dependency resolution and scoping of your instances.
 
-At the moment only single (god) `Injector` is supported.
+At the moment, only a single `Injector` is supported.
 
-*In future I'm planning to add child injectors for [on demand modules](https://developer.android.com/guide/app-bundle/playcore) support
-It doesn't mean that you cannot use library for multi modular app.*
+*In the future, I'm planning to add child injectors for [on demand modules](https://developer.android.com/guide/app-bundle/playcore) support
+It doesn't mean that you cannot use the library for a multi modular app.*
 
 ```kotlin
 val injector = Injector.create(modules = listof(LoggerModule(), CoffeeMakerModule(), HeaterModule()))
@@ -124,8 +124,8 @@ Finally we can resolve our `CoffeMaker` dependency and brew some coffee.
 
 There are two ways to resolve dependencies using `Injector`.
 
-First is using `inject()` delegated property. To enable that property in your class it 
-should implement `Injectable` interface 
+The first way is using the `inject()` delegated property. To enable that property in your class, it 
+should implement the `Injectable` interface 
 
 ```kotlin
 class CoffeeApp : Fragnum, Injectable {
@@ -148,7 +148,7 @@ class CoffeeApp : Fragnum, Injectable {
 }
 ```
 
-The second way is directly call `get` method on your `Injector` instance
+The second way is directly calling the `get` method on your `Injector` instance
 
 ```Kotlin
 val coffeeMaker = injector.get(CoffeeMaker::class)
@@ -158,7 +158,7 @@ val coffeeMaker2 : CoffeeMaker = injector.get()
 
 ### Configuration validation
 
-To validate injector correctness create unit test and run `checkInjector` helper function.
+To validate the injector correctness, create a unit test and run the `checkInjector` helper function.
 
 `checkInjector` will try to instantiate all declared dependencies and eager load all lazy properties.
 
